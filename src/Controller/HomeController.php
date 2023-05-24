@@ -8,14 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\DataFixtures\SquirrelFixtures;
 use App\Repository\SquirrelRepository;
 use App\Entity\Squirrel;
-
+use App\Repository\NutRepository;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(SquirrelRepository $SquirrelRepository): Response
+    public function index(SquirrelRepository $SquirrelRepository, NutRepository $nutRepository): Response
     {
         $squirrels = $SquirrelRepository->findAll();
-        return $this->render('home/index.html.twig', ['squirrels' => $squirrels]);
+        $nuts = $nutRepository->findAll();
+        return $this->render('home/index.html.twig', ['squirrels' => $squirrels, 'nuts' => $nuts]);
     }
 }
